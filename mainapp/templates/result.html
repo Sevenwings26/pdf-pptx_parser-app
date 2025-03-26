@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Parsing Results: {{ filename }}</h5>
+        <span class="badge bg-{{ 'info' if file_type == 'Pdf' else 'warning' }}">
+            {{ file_type }}
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <a href="{{ url_for('web.index') }}" class="btn btn-outline-secondary">Upload Another</a>
+            <a href="{{ url_for('web.list_files') }}" class="btn btn-outline-primary">View All Files</a>
+        </div>
+        
+        <div class="border p-3 bg-light">
+            <pre>{{ content }}</pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

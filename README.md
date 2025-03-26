@@ -1,3 +1,18 @@
+app/
+├── __init__.py
+├── api/
+│   ├── __init__.py
+│   ├── routes.py      # REST API endpoints
+│   └── models.py     # API data models
+├── web/
+│   ├── __init__.py
+│   ├── routes.py      # Web interface routes
+│   └── templates/     # HTML templates
+│       └── index.html
+├── parser.py          # Shared parsing logic
+└── config.py          # Configuration
+
+
 Backend: 
 ● API Design: Design and implement a REST API endpoint using a Python framework 
 (Please use Flask for this assessment) that accepts file uploads (PDF or PowerPoint) 
@@ -32,3 +47,12 @@ Installation
 
 pip install flask
 pip install Werkzeug
+pip install python-decouple
+pip install psycopg2
+pip install flask-sqlalchemy 
+pip install python-pptx
+pip install PyPDF2
+pip install flask-restx
+
+relevant info like:
+--- slide titles, text content, and any embedded metadata. 
