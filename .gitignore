@@ -1,1 +1,7 @@
 vester-project/.env
+mainapp/.env
+mainapp/par.db
+main.py
+upload
+v_env
+__pycache__

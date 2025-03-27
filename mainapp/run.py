@@ -7,3 +7,4 @@ if __name__ == '__main__':
         from extensions import db
         db.create_all()
     app.run(debug=True)
+

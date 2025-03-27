@@ -12,7 +12,8 @@ def create_app():
     app.config['MAX_FILE_SIZE'] = MAX_FILE_SIZE
     app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
     app.config['SECRET_KEY'] = SECRET_KEY
-    
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     # Initialize extensions
     db.init_app(app)
     
@@ -25,17 +26,3 @@ def create_app():
     api.add_namespace(api_ns)
     
     return app
-
-    # def create_app():
-    # app = Flask(__name__)
-    # # ... other config ...
-    
-    # # Register blueprints - WEB FIRST
-    # from .web.routes import web_bp
-    # from .api.routes import api_bp
-    
-    # app.register_blueprint(web_bp)  # Web interface at /
-    # api.init_app(app)
-    # api.add_namespace(api_bp)      # API at /api
-    
-    # return app
