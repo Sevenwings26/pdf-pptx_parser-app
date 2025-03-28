@@ -1,7 +1,4 @@
-vester-project/.env
-mainapp/.env
-mainapp/par.db
-main.py
+.env
 upload
-v_env
+venv
 __pycache__

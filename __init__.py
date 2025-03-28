@@ -16,7 +16,6 @@ def create_app():
     app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
     app.config['SECRET_KEY'] = SECRET_KEY
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
     app.config['CACHE_TYPE'] = CACHE_TYPE
     app.config['CACHE_REDIS_URL'] = CACHE_REDIS_URL
 
