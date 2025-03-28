@@ -22,7 +22,7 @@ This project provides a web application and API endpoints that allow users to up
 ### Prerequisites
 - Python 3.x
 - Docker & Docker Compose
-- Redis/RabbitMQ (if using Celery)
+- Redis (if using Celery)
 
 ### Steps
 1. Clone the repository:
@@ -34,7 +34,7 @@ This project provides a web application and API endpoints that allow users to up
 2. Create a virtual environment and install dependencies:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   venv\Scripts\activate`   # On Mac: source venv/bin/activate
    pip install -r requirements.txt
    ```
 3. Set up environment variables:
