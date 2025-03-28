@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: flask_app
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    command: ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "run:app"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: celery_worker
+    command: ["celery", "-A", "tasks.celery", "worker", "--loglevel=info"]
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis_broker
+    restart: always
+    ports:
+      - "6379:6379"

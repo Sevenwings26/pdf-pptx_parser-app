@@ -1,0 +1,21 @@
+# Use the same base image
+FROM python:3.10
+
+# Set the working directory
+WORKDIR /app
+
+# Copy dependencies first
+COPY requirements.txt . 
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application files
+COPY . .
+
+# Set environment variables for Celery (if needed)
+ENV CELERY_BROKER_URL=redis://redis:6379/0
+ENV CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# Start Celery worker
+CMD ["celery", "-A", "tasks.celery", "worker", "--loglevel=info"]
