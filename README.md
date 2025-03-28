@@ -1,4 +1,4 @@
-# File Upload & Parsing Service
+# PDF/PPTX Parsing APP
 
 ## Overview
 This project provides a web application and API endpoints that allow users to upload PDF and PPTX files, extract their contents, and process them asynchronously using Celery. It includes a structured deployment with Docker Compose, featuring an API Gateway, Parsing Service, Database Service, and Redis/RabbitMQ for task queuing.
