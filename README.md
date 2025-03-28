@@ -1,58 +1,91 @@
-app/
-├── __init__.py
-├── api/
-│   ├── __init__.py
-│   ├── routes.py      # REST API endpoints
-│   └── models.py     # API data models
-├── web/
-│   ├── __init__.py
-│   ├── routes.py      # Web interface routes
-│   └── templates/     # HTML templates
-│       └── index.html
-├── parser.py          # Shared parsing logic
-└── config.py          # Configuration
+# File Upload & Parsing Service
 
+## Overview
+This project provides a web application and API endpoints that allow users to upload PDF and PPTX files, extract their contents, and process them asynchronously using Celery. It includes a structured deployment with Docker Compose, featuring an API Gateway, Parsing Service, Database Service, and Redis/RabbitMQ for task queuing.
 
-Backend: 
-● API Design: Design and implement a REST API endpoint using a Python framework 
-(Please use Flask for this assessment) that accepts file uploads (PDF or PowerPoint) 
-and securely saves them to a designated storage location (use the local filesystem 
-for this assessment). 
-● Data Parsing: Develop a module that utilizes libraries like Apache POI (for PPTX) or 
-PyPDF2 (for PDF) to parse the uploaded documents. 
-Extract relevant information like 
-slide titles, text content, and any embedded metadata. 
+## Features
+- Secure file upload (PDF & PPTX only)
+- Asynchronous processing with Celery
+- File parsing and content extraction
+- Database storage for uploaded files and parsed content
+- Dockerized deployment with API Gateway, Parsing Service, and Database
+- Redis for caching and message brokering (optional RabbitMQ support)
 
-● Data Storage: Implement a database schema or data model (e.g., using a relational 
-database like PostgreSQL or a NoSQL database like MongoDB) to store the 
-extracted information for future retrieval and analysis.
+## Tech Stack
+- **Backend:** Flask
+- **Task Queue:** Celery
+- **Message Broker:** Redis (or RabbitMQ)
+- **Database:** PostgreSQL
+- **Containerization:** Docker & Docker Compose
 
-● Error Handling: Ensure robust error handling and validation to address scenarios 
-such as: 
-○ Unsupported file formats 
-○ Corrupted files 
-○ Exceeding file size limits 
-○ Database connection issues 
-● Deployment File: Build a deployment file using docker compose, with at least an API 
-Gateway or Broker service, a Parsing service and a database Service. 
-Demonstrating your knowledge of a cache service and a queuing service will be a 
-plus.
+## Installation
+### Prerequisites
+- Python 3.x
+- Docker & Docker Compose
+- Redis/RabbitMQ (if using Celery)
 
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sevenwings26/pdf-pptx_parser-app.git
+   cd pdf-pptx_parser-app
+   ```
 
-Title 
+2. Create a virtual environment and install dependencies:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+   ```
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   Configure your `.env` file accordingly.
+4. Run the application:
+   ```bash
+   python run.py
+   ```
 
-Description: 
+## Running with Docker Compose
+1. Build and start services:
+   ```bash
+   docker-compose up --build
+   ```
+2. The application should be available at `http://127.0.0.1:5000`
 
-Installation 
+## API Endpoints
+| Method | Endpoint | Description |
+|--------|-------------|----------------|
+| `GET` | `/` | Landing page |
+| `POST` | `/api/upload` | Upload a PDF/PPTX file |
+| `GET` | `/api/uploaded_files` | List recent uploads |
+| `GET` | `/api/parsed_files` | Retrieve all parsed files |
+| `GET` | `/api/parsed_files/{file_id}` | Retrieve a specific file |
+<!-- | `DELETE` | `/files/<id>` | Delete a specific file |
+| `GET` | `/tasks/<task_id>` | Check Celery task status | -->
 
-pip install flask
-pip install Werkzeug
-pip install python-decouple
-pip install psycopg2
-pip install flask-sqlalchemy 
-pip install python-pptx
-pip install PyPDF2
-pip install flask-restx
+## Celery & Background Processing
+1. Start Redis:
+   ```bash
+   docker run -d -p 6379:6379 redis
+   ```
+2. Start the Celery worker:
+   ```bash
+   celery -A app.celery worker --loglevel=info
+   ```
+3. Submit a task:
+   ```python
+   from app.tasks import process_file
+   process_file.delay("example.pdf")
+   ```
 
-relevant info like:
---- slide titles, text content, and any embedded metadata. 
+## Deployment
+For production deployment, you can use:
+```bash
+Docherfile docker-compose.yml
+```
+
+## License
+This project is licensed under the MIT License.
+

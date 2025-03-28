@@ -9,7 +9,7 @@ db = SQLAlchemy()
 api = Api(
     version='1.0',
     title='File Parser API',
-    description='API Documentation',
+    description='API Endpoints for the PDF/PPTx Parser.',
     doc='/api/docs/'  # This is the documentation URL
 )
 
