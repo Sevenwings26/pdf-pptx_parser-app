@@ -22,7 +22,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-
 REDIS_URL = decouple.config('REDIS_URL', default='redis://localhost:6379/0')
 # CACHE_TYPE = "SimpleCache"
 # CACHE_REDIS_URL = REDIS_URL

@@ -7,7 +7,7 @@ import os
 import uuid
 from datetime import datetime
 
-
+# blueprint for web route 
 web_bp = Blueprint('web', __name__)
 
 @web_bp.route("/", methods=["GET", "POST"])
@@ -83,21 +83,13 @@ def index():
             db.session.commit()
 
             flash('File uploaded and processed successfully!', 'success')
-            # return render_template("results.html", 
-            #                     filename=unique_filename,
-            #                     content=parsed_content,
-            #                     file_type=file_ext.capitalize())
-            
+
         except Exception as e:
             if os.path.exists(file_path):
                 os.remove(file_path)
             db.session.rollback()
             flash(f'Error processing file: {str(e)}', 'error')
             return redirect(url_for('web.index'))
-    
-    # # Get some file
-    # uploaded_files = FileUploaded.query.order_by(FileUploaded.upload_date.desc()).limit(10).all()
-
     # Get all files
     uploaded_files = FileUploaded.query.order_by(FileUploaded.upload_date.desc()).all()
     return render_template("index.html", recent_files=uploaded_files)
@@ -122,3 +114,24 @@ def view_file(file_id):
                          filename=original_file.filename,
                          upload_date=original_file.upload_date)
 
+
+@web_bp.route('/delete/<int:file_id>', methods=['POST'])
+def delete_file(file_id):
+    file_record = FileUploaded.query.get_or_404(file_id)
+
+    # Delete parsed data first (if it exists)
+    parsed_record = ParsedData.query.filter_by(file_id=file_id).first()
+    if parsed_record:
+        db.session.delete(parsed_record)
+
+    # Delete file from filesystem
+    file_path = os.path.join(UPLOAD_FOLDER, file_record.filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    # Delete the file record from DB
+    db.session.delete(file_record)
+    db.session.commit()
+
+    flash('File deleted successfully.', 'success')
+    return redirect(url_for('web.index'))
