@@ -1,8 +1,7 @@
 from flask import Flask
 from extensions import db, api, cache
 from config import SQLALCHEMY_DATABASE_URI, UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS, SECRET_KEY, CACHE_TYPE, CACHE_REDIS_URL
-# from __init__ import cache
-# from flask_caching import Cache
+
 
 
 def create_app():

@@ -3,6 +3,7 @@ import pptx
 from PyPDF2 import PdfReader
 from extensions import cache  # Import Redis cache
 
+
 @celery.task
 def extract_pdf_data(file_path):
     """Extracts text from PDF and caches results."""
@@ -22,6 +23,7 @@ def extract_pdf_data(file_path):
     result = "\n".join(content)
     cache.set(file_path, result, timeout=86400)  # Cache for 24 hours
     return result, None
+
 
 @celery.task
 def extract_pptx_data(file_path):
@@ -43,3 +45,5 @@ def extract_pptx_data(file_path):
     result = "\n".join(content)
     cache.set(file_path, result, timeout=86400)  # Cache for 24 hours
     return result, None
+
+

@@ -23,10 +23,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 REDIS_URL = decouple.config('REDIS_URL', default='redis://localhost:6379/0')
-# CACHE_TYPE = "SimpleCache"
-# CACHE_REDIS_URL = REDIS_URL
-CACHE_REDIS_URL = "redis://red-cvimu7euk2gs73ar8ecg:6379"
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
-CACHE_TYPE = "RedisCache"
+
+CACHE_REDIS_URL = decouple.config("REDIS_URL")
+
+CELERY_BROKER_URL = decouple.config("REDIS_URL")
+CELERY_RESULT_BACKEND = decouple.config("REDIS_URL")
+CACHE_TYPE = decouple.config("CACHE_TYPE")
 
