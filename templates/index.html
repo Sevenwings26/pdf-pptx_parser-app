@@ -15,8 +15,6 @@
     </div>
 </div>
 
-
-
 {% if recent_files %}
 <div class="mt-4">
     <h5>Recently Uploaded Files</h5>
@@ -62,6 +60,25 @@
     </ul>
 </div>
 {% endif %}
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Convert xslx to CSV</h5>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input type="file" id="file" name="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>
+                <label for="fileInput">Choose xslx file...</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+    </div>
+</div>
+
+{% comment %} <h1>Convert to CSV (Download)</h1>
+<form action="{{ url_for('convert_csv_two') }}" method="POST" enctype="multipart/form-data">
+    <input type="submit" value="Upload File">
+</form>    {% endcomment %}
 
 
 {% endblock %}
