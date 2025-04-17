@@ -1,10 +1,10 @@
-from tasks.celery import celery
+# from tasks.celery import celery
 import pptx
 from PyPDF2 import PdfReader
 from extensions import cache  # Import Redis cache
 
 
-@celery.task
+# @celery.task
 def extract_pdf_data(file_path):
     """Extracts text from PDF and caches results."""
     cached_result = cache.get(file_path)
@@ -25,7 +25,7 @@ def extract_pdf_data(file_path):
     return result, None
 
 
-@celery.task
+# @celery.task
 def extract_pptx_data(file_path):
     """Extracts text from PPTX and caches results."""
     cached_result = cache.get(file_path)

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, send_from_directory
 from extensions import db
 from .models import FileUploaded, ParsedData
 from parser import extract_pdf_data, extract_pptx_data
@@ -16,7 +16,6 @@ def index():
         if 'file' not in request.files:
             flash('No file part', 'error')
             return redirect(url_for('web.index'))
-
         file = request.files['file']
 
         if file.filename == '':
@@ -135,3 +134,22 @@ def delete_file(file_id):
 
     flash('File deleted successfully.', 'success')
     return redirect(url_for('web.index'))
+
+
+CONVERT_CSV = ...
+import pandas as pd
+import os
+@web_bp.route('/convert_to_csv', methods=['POST'])
+def convert_to_csv():
+    file = request.files.get('file')
+    df = pd.read_excel(file)
+    if not os.path.exists('downloads'):
+        os.makedirs('downloads')
+    filename = f"{uuid.uuid4()}.csv"
+    df.to_csv(os.path.join('downloads', filename))
+    return render_template('download_csv.html', filename=filename)
+
+
+@web_bp.route('/download/<filename>')
+def download(filename):
+    return send_from_directory('downloads', filename, download_name='result.csv')

@@ -1,7 +1,7 @@
 # PDF/PPTX Parsing APP
 
 ## Overview
-This project provides a web application and API endpoints that allow users to upload PDF and PPTX files, extract their contents, and process them asynchronously using Celery. It includes a structured deployment with Docker Compose, featuring an API Gateway, Parsing Service, Database Service, and Redis for task queuing.
+This project provides a web application and API endpoints that allow users to upload PDF and PPTX files, extract their contents, and process them asynchronously using Celery, and .xslx file to csv converter. It includes a structured deployment with Docker Compose, featuring an API Gateway, Parsing Service, Database Service, and Redis for task queuing.
 
 ## Features
 - Secure file upload (PDF & PPTX only)
@@ -54,7 +54,8 @@ This project provides a web application and API endpoints that allow users to up
    ```
 2. The application should be available at `http://127.0.0.1:5000`
 
-## API Endpoints
+## API/WEB Endpoints 
+### for Parsing (don't api to the web route)
 | Method | Endpoint | Description |
 |--------|-------------|----------------|
 | `GET` | `/` | Landing page |
@@ -62,8 +63,14 @@ This project provides a web application and API endpoints that allow users to up
 | `GET` | `/api/uploaded_files` | List recent uploads |
 | `GET` | `/api/parsed_files` | Retrieve all parsed files |
 | `GET` | `/api/parsed_files/{file_id}` | Retrieve a specific file |
-<!-- | `DELETE` | `/files/<id>` | Delete a specific file |
-| `GET` | `/tasks/<task_id>` | Check Celery task status | -->
+| `DELETE` | `/files/<id>` | Delete a specific file |
+<!-- | `GET` | `/tasks/<task_id>` | Check Celery task status | -->
+### for converting .xslx to csv
+| Method | Endpoint | Description |
+|--------|-------------|----------------|
+| `POST` | `/convert_to_csv` | Upload xlsx file |
+| `GET` | `/download/{filename}` | Download converted file
+
 
 ## Celery & Background Processing
 1. Start Redis:

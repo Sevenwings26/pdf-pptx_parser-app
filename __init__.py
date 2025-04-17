@@ -1,8 +1,6 @@
 from flask import Flask
-from extensions import db, api, cache
+from extensions import db, api, cache, celery
 from config import SQLALCHEMY_DATABASE_URI, UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS, SECRET_KEY, CACHE_TYPE, CACHE_REDIS_URL
-
-
 
 def create_app():
     app = Flask(__name__)
@@ -21,6 +19,9 @@ def create_app():
     cache.init_app(app)
     db.init_app(app)
 
+    # celery 
+    # celery.conf.update(app.config)
+
     # Register blueprints
     from api.routes import api_ns
     from web.routes import web_bp
@@ -30,3 +31,5 @@ def create_app():
     api.add_namespace(api_ns)
 
     return app
+
+

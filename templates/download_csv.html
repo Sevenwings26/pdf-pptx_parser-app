@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Download{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body text-center">
+      <h1 class="card-title mb-4">Your File is Ready</h1>
+      <a href="{{ url_for('web.download', filename=filename) }}" class="btn btn-primary btn-lg">
+        <i class="bi bi-download"></i> Download File
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
