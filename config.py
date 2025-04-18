@@ -21,13 +21,12 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # Ensure upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Redis configuration
+REDIS_URL = decouple.config('REDIS_URL', 'redis://localhost:6379/0')
 
-REDIS_URL = decouple.config('REDIS_URL', default='redis://localhost:6379/0')
-
-CACHE_REDIS_URL = decouple.config("CACHE_REDIS_URL")
-
-CELERY_BROKER_URL = decouple.config("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = decouple.config("CELERY_RESULT_BACKEND")
-
+# celery cofiguration
+CELERY_BROKER_URL = REDIS_URL 
+CELERY_RESULT_BACKEND = REDIS_URL
+CACHE_REDIS_URL = REDIS_URL
 CACHE_TYPE = decouple.config("CACHE_TYPE")
 

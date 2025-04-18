@@ -5,13 +5,17 @@ from parser import extract_pdf_data, extract_pptx_data
 
 celery = Celery(
     __name__,
-    backend=CELERY_RESULT_BACKEND,
     broker=CELERY_BROKER_URL,
+    backend=CELERY_RESULT_BACKEND,
+    broker_connection_retry_on_startup=True,  # Critical for Docker
+    broker_connection_retry=True,
+    broker_connection_max_retries=3
 )
 
 def make_celery(app):
     celery.conf.update(app.config)
     return celery
+
 
 @celery.task
 def process_file(file_path):
@@ -28,5 +32,4 @@ def process_file(file_path):
     if error:
         return f"Error: {error}"    
     return f"Successfully processed {file_path}"
-
 

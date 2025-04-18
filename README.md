@@ -5,11 +5,12 @@ This project provides a web application and API endpoints that allow users to up
 
 ## Features
 - Secure file upload (PDF & PPTX only)
+- Xslx file to csv converter
 - Asynchronous processing with Celery
 - File parsing and content extraction
 - Database storage for uploaded files and parsed content
 - Dockerized deployment with API Gateway, Parsing Service, and Database
-- Redis for caching and message brokering (optional RabbitMQ support)
+- Redis for caching and message brokering
 
 ## Tech Stack
 - **Backend:** Flask
